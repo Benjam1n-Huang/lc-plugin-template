@@ -1,10 +1,3 @@
-/*
- * @lc app=leetcode.cn id=21 lang=java
- * @lcpr version=30008
- *
- * [21] 合并两个有序链表
- */
-
 package leetcode.editor.cn;
 
 import java.util.*;
@@ -12,16 +5,27 @@ import leetcode.editor.common.*;
 
 public class MergeTwoSortedLists {
 
-    // @lc code=start
+    //leetcode submit region begin(Prohibit modification and deletion)
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     *     int val;
+     *     ListNode next;
+     *     ListNode() {}
+     *     ListNode(int val) { this.val = val; }
+     *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+     * }
+     */
     class Solution {
-        public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-            // 虚拟头结点
-            ListNode dummy = new ListNode(-1), p = dummy;
-            ListNode p1 = l1, p2 = l2;
-    
+        public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+            //首先创建虚拟节点dummy
+            ListNode dummy = new ListNode(-1);
+            ListNode p = dummy;
+
+            //创建双指针
+            ListNode p1 = list1, p2 = list2;
+
             while (p1 != null && p2 != null) {
-                // 比较 p1 和 p2 两个指针
-                // 将值较小的的节点接到 p 指针
                 if (p1.val > p2.val) {
                     p.next = p2;
                     p2 = p2.next;
@@ -29,48 +33,28 @@ public class MergeTwoSortedLists {
                     p.next = p1;
                     p1 = p1.next;
                 }
-                // p 指针不断前进
+
                 p = p.next;
             }
-    
+
             if (p1 != null) {
                 p.next = p1;
             }
-    
+
             if (p2 != null) {
                 p.next = p2;
             }
-    
+
             return dummy.next;
+
         }
     }
-    // @lc code=end
+    //leetcode submit region end(Prohibit modification and deletion)
+
     
     public static void main(String[] args) {
         Solution solution = new MergeTwoSortedLists().new Solution();
         // put your test code here
-        ListNode l1 = ListNode.createHead(new int[]{1,2,4});
-        ListNode l2 = ListNode.createHead(new int[]{1,3,4});
-
-        ListNode res = solution.mergeTwoLists(l1, l2);
-        ListNode.print(res);
+        
     }
 }
-
-
-
-/*
-// @lcpr case=start
-// [1,2,4]\n[1,3,4]\n
-// @lcpr case=end
-
-// @lcpr case=start
-// []\n[]\n
-// @lcpr case=end
-
-// @lcpr case=start
-// []\n[0]\n
-// @lcpr case=end
-
- */
-
