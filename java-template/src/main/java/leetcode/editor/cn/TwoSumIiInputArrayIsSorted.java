@@ -8,28 +8,24 @@ public class TwoSumIiInputArrayIsSorted {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] twoSum(int[] numbers, int target) {
-            //一左一右两个指针相向而行
-            int left = 0, right = numbers.length - 1;
+            //左右指针
+            int left = 0,right = numbers.length-1;
             while (left < right) {
-                int sum = numbers[left] + numbers[right];
-                if (sum == target) {
-                    // 题目要求的索引是从 1 开始的
-                    return new int[]{left + 1, right + 1};
-                } else if (sum < target) {
-                    // 让 sum 大一点
+                if ((numbers[left] + numbers[right]) == target) {
+                    return new int[]{left + 1,right + 1};
+                }else if ((numbers[left] + numbers[right]) < target) {
                     left++;
-                } else if (sum > target) {
-                    // 让 sum 小一点
+                }else if ((numbers[left] + numbers[right]) > target) {
                     right--;
                 }
             }
 
-            return new int[]{-1,-1};
+            return null;
+
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
 
-    
     public static void main(String[] args) {
         Solution solution = new TwoSumIiInputArrayIsSorted().new Solution();
         // put your test code here

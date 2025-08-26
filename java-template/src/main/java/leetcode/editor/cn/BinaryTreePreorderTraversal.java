@@ -24,21 +24,24 @@ public class BinaryTreePreorderTraversal {
      * }
      */
     class Solution {
-        List<Integer> res = new ArrayList<>();
 
         public List<Integer> preorderTraversal(TreeNode root) {
-            traversal(root);
+            List<Integer> res = new ArrayList<>();
+
+            if (root == null) {
+                return res;
+            }
+
+            //前序遍历的结果,root.val在第一个
+            res.add(root.val);
+            //递归遍历当前节点左子树的先序遍历结果
+            res.addAll(preorderTraversal(root.left));
+            //递归遍历当前节点右子树的先序遍历结果
+            res.addAll(preorderTraversal(root.right));
             return res;
         }
 
-        void traversal(TreeNode root) {
-            if (root == null) {
-                return;
-            }
-            res.add(root.val);
-            traversal(root.left);
-            traversal(root.right);
-        }
+
     }
     //leetcode submit region end(Prohibit modification and deletion)
 

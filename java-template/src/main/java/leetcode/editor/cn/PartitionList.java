@@ -18,34 +18,35 @@ public class PartitionList {
      */
     class Solution {
         public ListNode partition(ListNode head, int x) {
-            //首先定义两个虚拟头节点
-            //存放小于x的链表的虚拟头节点
-            ListNode dummy1 = new ListNode(-1);
-            //存放大于等于x的链表的虚拟头节点
-            ListNode dummy2 = new ListNode(-1);
-            // p1,p2指针负责生成结果链表
+            //分解链表，首先创建两个虚拟头节点
+            //链表1维护小于x的节点
+            ListNode dummy1 = new ListNode(101);
+            //链表2维护大于等于x的节点
+            ListNode dummy2 = new ListNode(101);
+
             ListNode p1 = dummy1, p2 = dummy2;
-            // p负责遍历原链表，类似合成两个有序链表的逻辑
+            //指针p在链表上游走
             ListNode p = head;
             while (p != null) {
-                if (p.val >= x) {
-                    p2.next = p;
-                    p2 = p2.next;
-                } else {
+                if (p.val < x) {
                     p1.next = p;
                     p1 = p1.next;
+                }else {
+                    p2.next = p;
+                    p2 = p2.next;
                 }
 
-                //断开原链表中的每个节点的next指针
+                //将节点从原始链表中断开避免成环
                 ListNode temp = p.next;
                 p.next = null;
                 p = temp;
             }
 
-            //连接两个链表
+            //将dummy1和dummy2分别维护的链表连接起来
             p1.next = dummy2.next;
 
             return dummy1.next;
+
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
