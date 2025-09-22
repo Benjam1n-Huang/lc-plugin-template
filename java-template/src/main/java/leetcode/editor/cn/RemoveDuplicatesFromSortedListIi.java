@@ -20,30 +20,24 @@ public class RemoveDuplicatesFromSortedListIi {
      */
     class Solution {
         public ListNode deleteDuplicates(ListNode head) {
-            //将原始链表分解为两个链表
-            //一条链表存放不重复的节点，另一条链表存放重复的节点
-            //运用虚拟头节点技巧
-            ListNode dummyUniq = new ListNode(101);
-            ListNode dummyDup = new ListNode(101);
+            //将原链表分解为两个链表
+            ListNode dummyUniq = new ListNode(101); //存放不重复节点的链表
+            ListNode dummyDup = new ListNode(-101); //存放重复节点的链表
 
-            ListNode pUniq = dummyUniq, pDup = dummyDup;
+            ListNode pUniq = dummyUniq,pDup = dummyDup;
             ListNode p = head;
-
             while (p != null) {
-                if ((p.next != null && p.val == p.next.val) || p.val == pDup.val) {
-                    //发现了重复节点，接到重复链表后面
+                if((p.next != null && p.val == p.next.val) || p.val == pDup.val) {
                     pDup.next = p;
                     pDup = pDup.next;
-                } else {
-                    //不是重复节点，接到不重复链表的后面
+                }else {
                     pUniq.next = p;
                     pUniq = pUniq.next;
                 }
 
                 p = p.next;
-                //将原链表和新链表断开
-                pUniq.next = null;
                 pDup.next = null;
+                pUniq.next = null;
             }
 
             return dummyUniq.next;

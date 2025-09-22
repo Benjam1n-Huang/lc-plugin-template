@@ -1,0 +1,45 @@
+
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     * int val;
+     * ListNode next;
+     * ListNode() {}
+     * ListNode(int val) { this.val = val; }
+     * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+     * }
+     */
+    class Solution {
+        public ListNode deleteDuplicates(ListNode head) {
+            //将原始链表分解为两个链表
+            //一条链表存放不重复的节点，另一条链表存放重复的节点
+            //运用虚拟头节点技巧
+            ListNode dummyUniq = new ListNode(101);
+            ListNode dummyDup = new ListNode(101);
+
+            ListNode pUniq = dummyUniq, pDup = dummyDup;
+            ListNode p = head;
+
+            while (p != null) {
+                if ((p.next != null && p.val == p.next.val) || p.val == pDup.val) {
+                    //发现了重复节点，接到重复链表后面
+                    pDup.next = p;
+                    pDup = pDup.next;
+                } else {
+                    //不是重复节点，接到不重复链表的后面
+                    pUniq.next = p;
+                    pUniq = pUniq.next;
+                }
+
+                p = p.next;
+                //将原链表和新链表断开
+                pUniq.next = null;
+                pDup.next = null;
+            }
+
+            return dummyUniq.next;
+        }
+    }
+
+//runtime:0 ms
+//memory:42.4 MB

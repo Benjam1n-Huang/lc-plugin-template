@@ -8,54 +8,32 @@ public class KthSmallestElementInASortedMatrix {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int kthSmallest(int[][] matrix, int k) {
-            //问题的本质是合并k个有序链表，然后找到第k个元素即可
-            //1. 首先将矩阵的每一列转化为一个链表
-            ListNode[] heads = new ListNode[matrix.length];
+            //存储二元组(matrix[i][j],i,j)
+            //i,j记录当前元素的索引位置，用于生成下一个节点
+            //构造小根堆
+            PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> {
+                return a[0] - b[0];
+            });
+
+            //将矩阵的每一行的第一个元素放入到小根堆中
             for (int i = 0; i < matrix.length; i++) {
-                //每行的第一个元素是头节点
-                ListNode head = new ListNode(matrix[i][0]);
-                ListNode p = head;
-                //从每行的第二个元素开始遍历该行
-                for (int j = 1; j <matrix[i].length; j++) {
-                    ListNode node = new ListNode(matrix[i][j]);
-                    //将节点链接到链表末尾
-                    p.next = node;
-                    //p节点前移
-                    p = p.next;
+                pq.offer(new int[]{matrix[i][0],i,0});
+            }
+
+            int res = -1;
+            while (!pq.isEmpty() && k > 0) {
+                int[] cur = pq.poll();
+                res = cur[0];
+                k--;
+                int i = cur[1];
+                int j = cur[2];
+                if (j+1 < matrix.length) {
+                    pq.offer(new int[]{matrix[i][j+1],i,j+1});
                 }
-                //装载完成
-                heads[i] = head;
             }
 
-            //2. 合并k个有序链表
-            //虚拟头节点
-            ListNode dummy = new ListNode(-1);
-            ListNode p = dummy;
-            //创建小顶堆
-            PriorityQueue<ListNode> pq = new PriorityQueue<>(heads.length, (a, b) -> (a.val - b.val));
-            //将各个链表的头节点加入到小顶堆中
-            for (ListNode head : heads) {
-                pq.add(head);
-            }
-            //循环终止条件是小顶堆为空
-            while (!pq.isEmpty()) {
-                ListNode node = pq.poll();
-                p.next = node;
-                if (node.next != null) {
-                    pq.add(node.next);
-                }
+            return res;
 
-                //p前进
-                p = p.next;
-            }
-
-            //3. 链表合并完成，且是升序链表，返回第k个元素即可
-            ListNode res = dummy;
-            for (int i = 0; i < k; i++) {
-                res = res.next;
-            }
-
-            return res.val;
 
         }
     }

@@ -20,17 +20,12 @@ public class MergeTwoSortedLists {
      */
     class Solution {
         public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-            //创建虚拟头节点
+            //创建虚拟头节点，方便边界操作
             ListNode dummy = new ListNode(-1);
             ListNode p = dummy;
-
-            //p1指向链表list1
-            ListNode p1 = list1;
-            //p2指向链表list2
-            ListNode p2 = list2;
-
+            //p1指向list1的头结点,p2指向list2的头结点
+            ListNode p1 = list1, p2 = list2;
             while (p1 != null && p2 != null) {
-                //比较两个链表上遍历指针对应的节点值的大小。然后哪一方小就将哪一方添加到结果链表上去
                 if (p1.val > p2.val) {
                     p.next = p2;
                     p2 = p2.next;
@@ -39,19 +34,15 @@ public class MergeTwoSortedLists {
                     p1 = p1.next;
                 }
 
-                //p不断前进
                 p = p.next;
             }
 
-            //跳出循环时，肯定是某一个链表遍历完了
             if (p1 != null) {
                 p.next = p1;
             }
-
             if (p2 != null) {
                 p.next = p2;
             }
-
             return dummy.next;
         }
     }
