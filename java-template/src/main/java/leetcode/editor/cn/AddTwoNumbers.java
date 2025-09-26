@@ -18,13 +18,14 @@ public class AddTwoNumbers {
      */
     class Solution {
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-            ListNode p1 = l1, p2 = l2;
             //虚拟头节点
             ListNode dummy = new ListNode(-1);
             ListNode p = dummy;
+
+            ListNode p1 = l1, p2 = l2;
             //记录进位
             int carry = 0;
-            //开始执行加法,两条链表走完且没有进位时结束循环
+            //开始执行加法，两条链表走完且没有进位时才能结束循环
             while (p1 != null || p2 != null || carry > 0) {
                 //先加上次的进位
                 int val = carry;
@@ -32,19 +33,21 @@ public class AddTwoNumbers {
                     val += p1.val;
                     p1 = p1.next;
                 }
+
                 if (p2 != null) {
                     val += p2.val;
                     p2 = p2.next;
                 }
 
-                //记录进位
+                //处理进位的情况
                 carry = val / 10;
                 val = val % 10;
-                //构建新节点
+                //构造新节点
                 ListNode node = new ListNode(val);
                 p.next = node;
                 p = p.next;
             }
+
             return dummy.next;
         }
     }

@@ -1,50 +1,50 @@
 package leetcode.editor.cn;
 
 import java.util.*;
-
 import leetcode.editor.common.*;
 
-public class ReverseLinkedList {
+public class PalindromeLinkedList {
 
     //leetcode submit region begin(Prohibit modification and deletion)
-
     /**
      * Definition for singly-linked list.
      * public class ListNode {
-     * int val;
-     * ListNode next;
-     * ListNode() {}
-     * ListNode(int val) { this.val = val; }
-     * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+     *     int val;
+     *     ListNode next;
+     *     ListNode() {}
+     *     ListNode(int val) { this.val = val; }
+     *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
      * }
      */
     class Solution {
-        public ListNode reverseList(ListNode head) {
+        public boolean isPalindrome(ListNode head) {
+            //最简单的思路,反转链表,然后逐个比对
+            ListNode temp = head;
+            ListNode newHead = reverse(temp);
+        }
+
+        public ListNode reverse(ListNode head) {
             if (head == null || head.next == null) return head;
-            //由于单链表的结构，至少需要三个指针才能完成链表的反转操作
-            //pre永远指向反转好的部分的头节点
-            //cur永远指向 正在处理的节点
-            //nxt 永远指向 cur 的后继
             ListNode pre = null, cur = head, nxt = head.next;
             while (cur != null) {
-                cur.next = pre;
+                cur.next  = pre;
                 pre = cur;
                 cur = nxt;
                 if (nxt != null) {
                     nxt = nxt.next;
                 }
             }
-            //返回反转后的头节点
-            return pre;
 
+            //此时pre指向翻转后链表的头节点
+            return pre;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
 
-
+    
     public static void main(String[] args) {
-        Solution solution = new ReverseLinkedList().new Solution();
+        Solution solution = new PalindromeLinkedList().new Solution();
         // put your test code here
-
+        
     }
 }

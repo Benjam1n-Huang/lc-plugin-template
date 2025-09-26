@@ -8,11 +8,11 @@ public class RemoveElement {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int removeElement(int[] nums, int val) {
-            if (nums.length == 0) return 0;
+            //快慢指针
+            //fast在前面探路,然后如果找到了值不为val的元素,就让赋值给slow,然后让slow++
+            //维护了nums[0...slow-1]区间内值都不为val
             int slow = 0, fast = 0;
-
             while (fast < nums.length) {
-                //维护数组nums[0...slow]均为值不等于val的元素
                 if (nums[fast] != val) {
                     nums[slow] = nums[fast];
                     slow++;

@@ -8,15 +8,17 @@ public class TwoSumIiInputArrayIsSorted {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] twoSum(int[] numbers, int target) {
-            //左右指针
-            int left = 0,right = numbers.length-1;
-            while (left < right) {
-                if ((numbers[left] + numbers[right]) == target) {
-                    return new int[]{left + 1,right + 1};
-                }else if ((numbers[left] + numbers[right]) < target) {
+            //在一个有序数组的的基础上,找到和为target的元素下标
+            //使用双指针技巧
+            int left = 0, right = numbers.length - 1;
+            while (left <= right) {
+                int sum = numbers[left] + numbers[right];
+                if (sum < target) {
                     left++;
-                }else if ((numbers[left] + numbers[right]) > target) {
+                }else if (sum > target) {
                     right--;
+                }else {
+                    return new int[]{left+1,right+1};
                 }
             }
 

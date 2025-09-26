@@ -18,32 +18,26 @@ public class AddTwoNumbersIi {
      */
     class Solution {
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-            //把链表元素转入栈中
+            //借助栈的特性进行反转链表
             Stack<Integer> stk1 = new Stack<>();
             while (l1 != null) {
                 stk1.push(l1.val);
                 l1 = l1.next;
             }
-
             Stack<Integer> stk2 = new Stack<>();
             while (l2 != null) {
                 stk2.push(l2.val);
                 l2 = l2.next;
             }
 
-            //虚拟头节点
-            ListNode dummy = new ListNode(-1);
-
+            ListNode dummy = new ListNode(-101);
             //记录进位
             int carry = 0;
-            //开始执行加法，两条链表走完且没有进位时才能结束循环
             while (!stk1.isEmpty() || !stk2.isEmpty() || carry > 0) {
-                //先加上次的进位
                 int val = carry;
                 if (!stk1.isEmpty()) {
                     val += stk1.pop();
                 }
-
                 if (!stk2.isEmpty()) {
                     val += stk2.pop();
                 }
@@ -51,12 +45,13 @@ public class AddTwoNumbersIi {
                 carry = val / 10;
                 val = val % 10;
                 ListNode node = new ListNode(val);
-                //新节点直接跟在虚拟头节点后面
                 node.next = dummy.next;
                 dummy.next = node;
             }
 
             return dummy.next;
+
+
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)

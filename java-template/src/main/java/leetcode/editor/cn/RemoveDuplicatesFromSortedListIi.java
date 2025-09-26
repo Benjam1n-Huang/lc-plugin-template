@@ -20,14 +20,16 @@ public class RemoveDuplicatesFromSortedListIi {
      */
     class Solution {
         public ListNode deleteDuplicates(ListNode head) {
-            //将原链表分解为两个链表
-            ListNode dummyUniq = new ListNode(101); //存放不重复节点的链表
-            ListNode dummyDup = new ListNode(-101); //存放重复节点的链表
-
-            ListNode pUniq = dummyUniq,pDup = dummyDup;
+            if (head == null) return null;
+            //没有重复节点的结果链表
+            ListNode dummyUniq = new ListNode(-101);
+            //重复节点的结果链表
+            ListNode dummyDup = new ListNode(-101);
+            ListNode pUniq = dummyUniq, pDup = dummyDup;
+            //p来遍历链表
             ListNode p = head;
             while (p != null) {
-                if((p.next != null && p.val == p.next.val) || p.val == pDup.val) {
+                if ((p.next !=null && p.val == p.next.val) || p.val == pDup.val) {
                     pDup.next = p;
                     pDup = pDup.next;
                 }else {
@@ -39,8 +41,8 @@ public class RemoveDuplicatesFromSortedListIi {
                 pDup.next = null;
                 pUniq.next = null;
             }
-
             return dummyUniq.next;
+
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
