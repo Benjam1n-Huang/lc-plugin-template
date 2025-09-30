@@ -20,7 +20,7 @@ public class ReverseNodesInKGroup {
         public ListNode reverseKGroup(ListNode head, int k) {
             if (head == null ) return null;
             //1.先反转以head开头的k个元素(这里可以复用之前的reverseN函数)
-            //2.将k+1个节点作为head递归调用reverseKGroup函数
+            //2.将第k+1个节点作为head递归调用reverseKGroup函数
             //3.最后将两个过程结果拼接起来
 
             //区间[a,b)包含k个待翻转的元素
