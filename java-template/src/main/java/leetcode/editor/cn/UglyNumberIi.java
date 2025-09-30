@@ -8,7 +8,7 @@ public class UglyNumberIi {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int nthUglyNumber(int n) {
-            
+            return 0;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
