@@ -18,12 +18,16 @@ public class FindAllAnagramsInAString {
                 need.put(c, need.getOrDefault(c,0) + 1);
             }
 
+            //滑动窗口的左右边界
             int left = 0, right = 0;
+            //统计满足要求的字符的个数
             int valid = 0;
             //记录结果
             List<Integer> res = new ArrayList<>();
             while (right < s.length()) {
+                //c是即将移入窗口的字符
                 char c = s.charAt(right);
+                //窗口扩大
                 right++;
                 //进行窗口内的一些列数据更新
                 if (need.containsKey(c)) {

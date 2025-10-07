@@ -8,53 +8,41 @@ public class SortColors {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public void sortColors(int[] nums) {
-            //相当于是一个长链表的拆解，将其拆成三部分
-            //先将数组变成链表
-            ListNode dummy = new ListNode(-1);
-            ListNode p4 = dummy;
-            for (int num : nums) {
+            //可以将原数组拆成三个链表
+            //dummy1,dummy2,dummy3分别代表红、白、蓝链表
+            ListNode dummyRed = new ListNode(-1);
+            ListNode dummyWhite = new ListNode(-1);
+            ListNode dummyBlue = new ListNode(-1);
+
+            ListNode pRed = dummyRed, pWhite = dummyWhite, pBlue = dummyBlue;
+            //装配链表
+            for(int num : nums) {
                 ListNode node = new ListNode(num);
-                p4.next = node;
-                p4 = p4.next;
-            }
-
-            //dummy1,2,3分别存储0，1，2链表
-            ListNode dummy1 = new ListNode(-1);
-            ListNode dummy2 = new ListNode(-1);
-            ListNode dummy3 = new ListNode(-1);
-            ListNode p1 = dummy1, p2 = dummy2, p3 = dummy3;
-            ListNode head = dummy.next;
-            ListNode p = head;
-            while (p != null) {
-                if (p.val == 0) {
-                    ListNode node = new ListNode(p.val);
-                    p1.next = node;
-                    p1 = p1.next;
-                } else if (p.val == 1) {
-                    ListNode node = new ListNode(p.val);
-                    p2.next = node;
-                    p2 = p2.next;
-                } else if (p.val == 2) {
-                    ListNode node = new ListNode(p.val);
-                    p3.next = node;
-                    p3 = p3.next;
+                switch(node.val) {
+                    case 0 -> {
+                        pRed.next = node;
+                        pRed = pRed.next;
+                    }
+                    case 1 -> {
+                        pWhite.next = node;
+                        pWhite = pWhite.next;
+                    }
+                    case 2 -> {
+                        pBlue.next = node;
+                        pBlue = pBlue.next;
+                    }
                 }
-
-                //p前进
-                p = p.next;
             }
 
-            //将三个链表链接起来
-            p2.next = dummy3.next;
-            p1.next = dummy2.next;
+            //将三个链表连接起来
+            pWhite.next = dummyBlue.next;
+            pRed.next = dummyWhite.next;
 
-            //将链表转化为数组
-            int index = 0;
-            ListNode temp  = dummy1.next;
-            while (temp != null && index < nums.length) {
-                nums[index] = temp.val;
-                index++;
-                temp = temp.next;
+            //转化为数组
+            ListNode p = dummyRed.next;
+            for(int i = 0;i < nums.length;i++) {
+                nums[i] = p.val;
+                p = p.next;
             }
 
 

@@ -8,53 +8,52 @@ public class MinimumWindowSubstring {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public String minWindow(String s, String t) {
-            //滑动窗口来解决最小覆盖子串的问题
-            //window来记录窗口内的字符统计情况
+            //滑动窗口算法技巧主要用来解决子数组问题，比如让你寻找符合某个条件的最长/最短子数组
+            // 记录 window 中的字符出现次数
             HashMap<Character, Integer> window = new HashMap<>();
-            //need来记录需求的字符统计情况
+            // 记录所需的字符出现次数
             HashMap<Character, Integer> need = new HashMap<>();
             for (char c : t.toCharArray()) {
-                need.put(c,need.getOrDefault(c,0) + 1);
+                need.put(c, need.getOrDefault(c,0) + 1);
             }
 
+            //滑动窗口的左右边界
+            int left = 0, right = 0;
+            //valid负责统计满足要求的字符数
+            int valid = 0;
             //记录最小覆盖子串的起始索引和长度
             int start = 0, len = Integer.MAX_VALUE;
-
-            //滑动窗口
-            int left = 0, right = 0;
-            int valid = 0;
             while (right < s.length()) {
-                //c 是即将加入到窗口的字符
+                //c是即将移入窗口的字符
                 char c = s.charAt(right);
                 //扩大窗口
                 right++;
-                //窗口内添加新字符后，开始进行数据处理
-                if (need.containsKey(c)) { //表示即将添加到窗口window内的字符是我们的目标字符之一
-                    window.put(c,window.getOrDefault(c,0) + 1);
+                //进行窗口内的一些列数据更新
+                if (need.containsKey(c)) {
+                    window.put(c, window.getOrDefault(c,0) + 1);
                     if (window.get(c).equals(need.get(c))) {
                         valid++;
                     }
                 }
 
-                //窗口开始收缩的条件
+                //判断左窗口是否要收缩
                 while (valid == need.size()) {
-                    //更新最小覆盖子串
+                    //在这里更新最小覆盖子串
                     if (right - left < len) {
                         start = left;
                         len = right - left;
                     }
 
-                    //d 是即将移出窗口的字符
+                    //d是即将移出窗口的字符
                     char d = s.charAt(left);
-                    //窗口左边界收缩
+                    //缩小窗口
                     left++;
-
-                    //滑动窗口收缩，开始对窗口内的数据进行处理
-                    if (need.containsKey(d)) { //表示即将移出窗口的字符是目标字符之一
-                        if (window.get(d).equals(need.get(d))){
+                    //进行窗口内的一系列数据更新
+                    if (need.containsKey(d)) {
+                        if (window.get(d).equals(need.get(d))) {
                             valid--;
                         }
-                        window.put(d,window.get(d) - 1);
+                        window.put(d, window.get(d) - 1);
                     }
                 }
             }
