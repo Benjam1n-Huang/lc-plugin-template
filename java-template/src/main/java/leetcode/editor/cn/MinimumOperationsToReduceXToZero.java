@@ -13,38 +13,36 @@ public class MinimumOperationsToReduceXToZero {
             //这道题等价于让你寻找 nums 中元素和为 sum(nums) - x 的最长子数组。
             int n = nums.length, sum = 0;
             for (int i = 0; i < n; i++) {
-                //统计数组的和
                 sum += nums[i];
             }
-            //滑动窗口需要寻找的子数组目标和
+
+            //滑动窗口需要找到的子数组的目标和
             int target = sum - x;
 
             int left = 0, right = 0;
-            //记录窗口内的所有元素和
+            //记录窗口内的所有元素的和
             int windowSum = 0;
             //记录目标子数组的最大长度
             int maxLen = Integer.MIN_VALUE;
-            //开始执行滑动窗口框架
-            while (right < nums.length) {
+            while(right < nums.length) {
                 //扩大窗口
                 windowSum += nums[right];
                 right++;
 
-                while (windowSum > target && left < right) {
-                    //缩小窗口
+                while(windowSum > target && left < right) {
+                    //尝试缩小窗口
                     windowSum -= nums[left];
                     left++;
                 }
 
                 //寻找目标子数组
-                if (windowSum == target) {
-                    maxLen = Math.max(maxLen, right - left);
+                if(windowSum == target) {
+                    maxLen = Math.max(right - left, maxLen);
                 }
             }
 
             //目标子数组的最大长度可以推导出需要删除的字符数量
-            return maxLen == Integer.MIN_VALUE ? -1 : n  - maxLen;
-
+            return maxLen == Integer.MIN_VALUE ? -1 : n-maxLen;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
